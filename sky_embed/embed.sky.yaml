@@ -1,0 +1,24 @@
+# One-off: sentence-transformer embeddings of the SFT v1 user prompts, for the
+# semantic UMAP in agentharm_blog/plot_sft_v1_overview.py. Launched as a managed job
+# because the JupyterHub box has a 4 GB memory limit (not enough to load torch + model).
+# Reads texts.jsonl and writes emb_<model>.npy in this folder, via the shared bucket
+# mounted at /workspace (= /home/jovyan/Shared on JupyterHub).
+#
+#   sky jobs launch agentharm_blog/sky_embed/embed.sky.yaml -n sft-v1-embed -y
+name: sft-v1-embed
+resources:
+  accelerators: L4:1
+  ordered:
+    - infra: gcp/us-central1/us-central1-c
+    - infra: gcp/us-central1/us-central1-b
+    - infra: gcp/us-central1/us-central1-a
+file_mounts:
+  /workspace:
+    source: gs://alwaysfurther-training-workspace
+    mode: MOUNT
+envs:
+  ST_MODEL: all-mpnet-base-v2
+setup: pip install -q sentence-transformers
+run: |
+  cd /workspace/shared/kexin/agentharm_blog/sky_embed
+  python embed.py $ST_MODEL
