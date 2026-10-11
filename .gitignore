@@ -2,3 +2,4 @@ __pycache__/
 .ipynb_checkpoints/
 sky_embed/*.npy
 sky_embed/texts.jsonl
+sky_embed/texts*.jsonl

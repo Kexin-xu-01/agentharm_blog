@@ -1,0 +1,22 @@
+# One-off: embed the SFT v2.1 user prompts (superset of v2) and fit a joint v1+v2.1 UMAP,
+# for agentharm_blog/plot_sft_v1_vs_v2.py. Same setup as embed.sky.yaml.
+#
+#   sky jobs launch agentharm_blog/sky_embed/embed_v2.sky.yaml -n sft-v2-embed -y
+name: sft-v2-embed
+resources:
+  accelerators: L4:1
+  ordered:
+    - infra: gcp/us-central1/us-central1-c
+    - infra: gcp/us-central1/us-central1-b
+    - infra: gcp/us-central1/us-central1-a
+file_mounts:
+  /workspace:
+    source: gs://alwaysfurther-training-workspace
+    mode: MOUNT
+envs:
+  ST_MODEL: all-mpnet-base-v2
+setup: pip install -q sentence-transformers umap-learn
+run: |
+  cd /workspace/shared/kexin/agentharm_blog/sky_embed
+  python embed.py $ST_MODEL texts_v2.1.jsonl
+  python umap_v1v2.py
