@@ -25,12 +25,14 @@ import yaml
 from matplotlib.path import Path as MPath
 from matplotlib.patches import PathPatch
 
+from style import TOL
+
 TEXTWIDTH_IN = {"neurips": 5.5, "iclr": 5.5, "icml": 6.75}
 INK, INK_2, INK_3 = "#0b0b0b", "#52514e", "#8a8983"
 EDGE = "#a9a8a2"
-FILL = {0: "#1c5cab", 1: "#dbe8f9", 2: "#ffffff"}
+FILL = {0: TOL["indigo"], 1: "#E1EEF6", 2: "#ffffff"}  # depth-1: pale tint of Tol cyan
 TEXT_ON = {0: "#ffffff", 1: INK, 2: INK}
-LEAF = "#3987e5"
+LEAF = TOL["teal"]
 
 
 def set_style(base_pt=7.0):
