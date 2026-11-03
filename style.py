@@ -59,7 +59,7 @@ def save(fig, stem, dpi=600):
     """Write <stem>.pdf, then rasterise it to <stem>.png with Ghostscript if available
     (much lower peak memory than matplotlib at high dpi; this box has a 4 GB limit)."""
     pdf, png = f"{stem}.pdf", f"{stem}.png"
-    fig.savefig(pdf, bbox_inches="tight", pad_inches=0.02)
+    fig.savefig(pdf, dpi=dpi, bbox_inches="tight", pad_inches=0.02)  # dpi sets rasterized artists
     if shutil.which("gs"):
         subprocess.run(["gs", "-q", "-dSAFER", "-dBATCH", "-dNOPAUSE", "-sDEVICE=png16m", f"-r{dpi}",
                         "-dTextAlphaBits=4", "-dGraphicsAlphaBits=4", f"-sOutputFile={png}", pdf],
