@@ -3,3 +3,4 @@ __pycache__/
 sky_embed/*.npy
 sky_embed/texts.jsonl
 sky_embed/texts*.jsonl
+data/
